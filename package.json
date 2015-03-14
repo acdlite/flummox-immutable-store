@@ -1,0 +1,36 @@
+{
+  "name": "flummox-immutable-store",
+  "version": "0.0.0",
+  "description": "Flummox store with Immutable.js support for serialization and undo/redo",
+  "main": "lib/ImmutableStore.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acdlite/flummox-immutable-store.git"
+  },
+  "homepage": "https://github.com/acdlite/flummox-immutable-store/blob/latest/README.md",
+  "bugs": "https://github.com/acdlite/flummox-immutable-store/issues",
+  "scripts": {
+    "test": "make fast-js test",
+    "prepublish": "npm run test"
+  },
+  "keywords": [
+    "flux",
+    "flummox",
+    "immutable"
+  ],
+  "author": "Andrew Clark <acdlite@me.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "~4.7.4",
+    "babel-eslint": "~1.0.14",
+    "babel-runtime": "~4.7.4",
+    "chai": "~2.1.1",
+    "eslint": "~0.16.1",
+    "flummox": "3.x.x",
+    "immutable": "3.x.x",
+    "istanbul": "~0.3.7",
+    "lodash.isplainobject": "~3.0.0",
+    "mocha": "~2.2.1",
+    "source-map-support": "~0.2.9"
+  }
+}
