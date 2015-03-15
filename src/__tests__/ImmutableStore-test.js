@@ -1,5 +1,5 @@
 import ImmutableStore from '../ImmutableStore';
-import Immutable from 'immutable';
+import { default as Immutable, Record, List } from 'immutable';
 import isPlainObject from 'lodash.isplainobject';
 
 describe('ImmutableStore', () => {
@@ -15,7 +15,7 @@ describe('ImmutableStore', () => {
     class GoodStore extends ImmutableStore {
       constructor() {
         super({
-          StateRecord: new Immutable.Record({ foo: 'bar' })
+          StateRecord: new Record({ foo: 'bar' })
         });
       }
     }
@@ -32,7 +32,7 @@ describe('ImmutableStore', () => {
     class Store extends ImmutableStore {
       constructor() {
         super({
-          StateRecord: new Immutable.Record({
+          StateRecord: new Record({
             initial: 'state',
             react: 'iskewl',
           })
@@ -50,7 +50,7 @@ describe('ImmutableStore', () => {
 
   describe('.assignState()', () => {
     it('should return a copy of newState if oldState is nonexistent', () => {
-      const StateRecord = new Immutable.Record({
+      const StateRecord = new Record({
         do: 're',
         mi: 'fa',
       });
@@ -78,15 +78,28 @@ describe('ImmutableStore', () => {
   });
 
   describe('#setState()', () => {
-    it('should deeply convert plain objects', () => {
+    it('should use Record#merge()', () => {
       class Store extends ImmutableStore {
         constructor() {
           super({
-            re: 'mi',
-            fa: 'so',
+            StateRecord: new Record({
+              re: new List([1, 2, 3]),
+              fa: new List(['a', 'b', 'c']),
+            })
           });
         }
       }
+
+      const store = new Store();
+
+      expect(store.state.get('fa').get(1)).to.equal('b');
+
+      // plain object will be deeply-converted
+      store.setState({
+        fa: ['a', 'lol', 'b']
+      });
+
+      expect(store.state.get('fa').get(1)).to.equal('lol');
     });
   });
 
@@ -95,7 +108,7 @@ describe('ImmutableStore', () => {
       const foo = new Immutable.List([1, 2, 3]);
       const bar = new Immutable.List(['a', 'b', 'c']);
 
-      const StateRecord = new Immutable.Record({ foo, bar });
+      const StateRecord = new Record({ foo, bar });
 
       class Store extends ImmutableStore {
         constructor() {
