@@ -3,6 +3,8 @@ import { Record } from 'immutable';
 
 export default class ImmutableStore extends Store {
   constructor(options = {}) {
+    super();
+
     const { StateRecord } = options;
     this.StateRecord = StateRecord;
 
